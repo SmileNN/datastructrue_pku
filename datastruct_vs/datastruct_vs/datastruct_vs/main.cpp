@@ -1,6 +1,7 @@
 #include <iostream>
+#include "inkList.h"
 
 int main(){
-	std::cout << "r" << std::endl;
+	inkList<int> ink(10);
 	return 0;
 }

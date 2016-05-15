@@ -1,23 +1,33 @@
 #include <iostream>
 
-int f(int n , int m){
-	int num[] = new int[n + 1] ;
-	int liv[] = new int[n + 1] ;
-	for(int i = 0 ; i < n + 1 ; i ++){
-		num[i] = i ;
-		liv[i] = 1 ;
+const int max_N = 301 ;
+bool exi[max_N]; 
+int n , m ;
+
+int find(int begin){
+	int res = begin ;
+	for(int i = 0 ; i < m ;){
+		if(exi[res] == true) i ++ ;
+		res = (res + 1) % n ;
 	}
-	int cnt = 0 ;
-	int ind = 1 ;
-	while(cnt != n - 1){
-		
-	}
+	//std::cerr << (res - 1 + n ) % n << std::endl;
+	return (res - 1 + n ) % n ;
 }
 
 int main(){
-	int n , m ; 
 	while(std::cin >> n >> m){
-		std::cout << f(n , m) << std::endl;
+		for(int i = 0 ; i < max_N ; i ++) exi[i] = true ;
+		int ind = 0 ;
+		for(int i = 0 ; i < n - 1 ; i ++){
+			ind = find(ind) ;
+			exi[ind] = false ;
+		}
+		for(int i = 0 ; i < n ; i ++){
+			if(exi[i] == true){ 
+				std::cout << i + 1 << std::endl; 
+				break ;
+			}
+		}
 	}
-	return 0 ;
+	return 0;
 }
