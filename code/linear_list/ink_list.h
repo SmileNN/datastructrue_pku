@@ -133,4 +133,18 @@ class ink_list:public list<T>{
 			}
 			std::cout << std::endl << std::endl;
 		}
+
+		void reverse(){
+			if(head == tail) return ;
+			node<T> *p ;				
+			node<T> *q = tail ;
+			node<T> *r = head -> next ;
+			while(head -> next != tail){	// 讲 p 节点插入到 q 节点后面。
+				p = head -> next ;
+				head -> next = p -> next ;
+				p -> next = q -> next ;
+				q -> next = p ;
+			}
+			tail = r ;
+		}
 };

@@ -26,6 +26,9 @@ void ink_list_test(){
 		alist.remove(i) ;
 		alist.print();
 	}
+	
+	alist.reverse();
+	alist.print();
 
 	for(int i = 0 ; i < 10 ; i ++){
 		std::cout << i << " in " << alist.get_position(i) << std::endl;
