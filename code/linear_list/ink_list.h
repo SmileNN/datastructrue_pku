@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include ".\list.h"
 
 template <class T>
 class node{
@@ -15,34 +16,29 @@ class node{
 };
 
 template <class T>
-class ink_list{
+class ink_list:public list<T>{
 	protected:
 		node<T>* head;
 		node<T>* tail;			// 单链表的头、尾指针
-		int length ;
+		int len ;
+		
+		node<T>* get_point(int p){
+			node<T> * res = head ;
+			for(int i = 0 ; i < p ; i ++){
+				res = res -> next ;
+			}
+			return res ;
+		}
 	public:
 		ink_list(){
-			tail = new node<T> ;	// head 和 tail 是一个节点。
-			head = tail ;
-			head -> data = 9527 ;	// 9527 做标记。
-			length = 0 ;
+			head = tail = new node<T>(9527) ;	// head 和 tail 是一个节点。
+			len = 0 ;
 		}
 		~ink_list(){
 			clear();
 			delete head ;
 		}
-		void print(){
-			std::cout << "length = " << length << " : ";
-			for(node<T> * i = head ; i != tail -> next ; i = i -> next){
-				std::cout << i -> data << " ";
-			}
-			std::cout << std::endl;
-		}
-
-		bool is_empty(){
-			return length == 0 ? true : false ;
-		}
-
+		
 		void clear(){					// 将链表存储的内容清除，成为空表
 			node<T> * temp;
 			while(head != NULL){
@@ -50,47 +46,68 @@ class ink_list{
 				head = head -> next ;
 				delete temp ;
 			}
-			head = tail = new node<T> ;
-			length = 0 ;
+			head = tail = new node<T>(9527) ;	// head 和 tail 是一个节点。
+			len = 0 ;
 		}
-
+		
+		int length(){
+			return len ;
+		}
+		
+		bool is_empty(){
+			return len == 0 ? true : false ;
+		}
+		
 		bool append(T val){				// 在表尾添加一个元素value，表的长度增1
 			tail -> next = new node<T>(val) ;		// ????????????????????????????????????
 			tail = tail -> next ;
-			length ++ ;
+			len ++ ;
 		}
-
+		
 		bool insert(int p, T val){
-			if( p < 0 || p > length){
-				std::cerr << "ERROR: " << p << " isn't in [0," << length << "]." << std::endl;
+			if( p < 0 || p > len){					// 插入的时候是闭区间
+				std::cerr << "ERROR: " << p << " isn't in [0," << len << "]." << std::endl;
 				return false ;
 			}
-			node<T> * ind = head ;
-			for(int i = 0 ; i < p ; i ++){
-				ind = ind -> next ;
-			}
+			node<T> * ind = get_point(p) ;
 			node<T> *  temp = new node<T>(val, ind -> next) ;
 			ind -> next = temp ;
-			length ++ ;
+			len ++ ;
 			return true ;
 		}
-
+		
 		bool remove(int p){
-			if( p < 0 || p > length){
-				std::cerr << "ERROR: " << p << " isn't in [0," << length << "]." << std::endl;
+			if( p < 0 || p >= len){
+				std::cerr << "ERROR: " << p << " isn't in [0," << len << ")." << std::endl;
 				return false ;
 			}
-			node<T> * temp = head ;
-			for(int i = 0 ; i < p ; i ++){
-				temp = temp -> next ;
-			}
+			node<T> * temp = get_point(p) ;
 			node<T> * point = temp -> next ;
 			temp -> next = point -> next ;
 			delete point ;
-			length -- ;
+			len -- ;
 			return true ;
 		}
-
+			
+		T get_value(int p){
+			if( p < 0 || p >= len){
+				std::cerr << "ERROR: " << p << " isn't in [0," << len << ")." << std::endl;
+				return false ;
+			}
+			node<T> * temp = get_point(p) ;
+			return temp -> next -> data ;
+		}
+		
+		bool set_value(int p, T value){ // 用value修改位置p的元素值
+			if( p < 0 || p >= len){
+				std::cerr << "ERROR: " << p << " isn't in [0," << len << ")." << std::endl;
+				return false ;
+			}
+			node<T> * temp = get_point(p) ;
+			temp -> next -> data = value;
+			return true ;
+		}
+		
 		int get_position(const T val){
 			int cnt = -1 ;
 			for(node<T> * temp = head ; temp != tail -> next ; temp = temp -> next){
@@ -100,5 +117,13 @@ class ink_list{
 				cnt ++ ;
 			}
 			return -1 ;
+		}
+		
+		void print(){
+			std::cout << "len = " << len << " : ";
+			for(node<T> * i = head ; i != tail -> next ; i = i -> next){
+				std::cout << i -> data << " ";
+			}
+			std::cout << std::endl;
 		}
 };

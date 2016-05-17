@@ -1,10 +1,13 @@
 #include <iostream>
 
-#include "./linear_list/list.h"
 #include "./linear_list/arr_list.h"
 #include "./linear_list/ink_list.h"
 
+void ink_list_test();
+void arr_list_test();
+
 int main(){
+	//arr_list_test();
 	ink_list_test();
 	return 0 ;
 }

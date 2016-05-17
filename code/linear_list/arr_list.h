@@ -1,7 +1,8 @@
 ﻿#include <iostream>
+#include ".\list.h"
 
 template <class T>
-class arr_list{
+class arr_list:public list<T>{
 	private:    					// 线性表的取值类型和取值空间
 		int  max_size;            	// 私有变量，顺序表实例的最大长度
 		int  cur_len; 		    	// 私有变量，顺序表实例的当前长度
@@ -17,6 +18,10 @@ class arr_list{
 		~arr_list(){					// 析构函数，用于消除该表实例
 			std::cerr << "list is delete" << std::endl;
 			delete [] a_list;
+		}
+		
+		bool is_empty(){
+			return cur_len == 0 ? true : false ;
 		}
 		
 		void clear(){      			// 将顺序表存储的内容清除，成为空表
@@ -63,13 +68,30 @@ class arr_list{
 			return true;
 		}
 
+		T get_value(int p){
+			if(p < 0 || p > cur_len){
+				std::cerr << "ERROR: get position " << p << " is not in [0, " << cur_len << ")." << std::endl;
+				return a_list[0];
+			}
+			return a_list[p] ;
+		}
+		
+		bool set_value(int p, T value){
+			if(p < 0 || p > cur_len){
+				std::cerr << "ERROR: set position " << p << " is not in [0, " << cur_len << ")." << std::endl;
+				return false ;
+			}
+			a_list[p] = value ;
+			return true ;
+		}
+		
 		int get_position(const T val){	// 在线性表中查找值为val的元素，并返回第1次出现的位置
 			for(int i = 0 ; i < cur_len ; i ++){
 				if(a_list[i] == val) return i;
 			}
 			return -1;					// -1 是一个不存在的下标，所以找不到的时候就返回 -1
 		}
-
+		
 		void print(){
 			std::cout << "len = " << cur_len << std::endl;
 			for(int i = 0 ; i < cur_len ; i ++){
