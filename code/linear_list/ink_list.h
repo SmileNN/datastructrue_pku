@@ -88,6 +88,10 @@ class ink_list:public list<T>{
 			node<T> * point = temp -> next ;
 			temp -> next = point -> next ;
 			delete point ;
+			if(p == len - 1){
+				tail = temp ;	
+			}
+
 			len -- ;
 			return true ;
 		}

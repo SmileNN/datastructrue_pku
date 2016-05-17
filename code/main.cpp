@@ -22,7 +22,7 @@ void ink_list_test(){
 		alist.print();
 	}
 	alist.print();
-	for(int i = 0 ; i < 5 ; i ++){
+	for(int i = 14 ; i > 10 ; i --){
 		alist.remove(i) ;
 		alist.print();
 	}
