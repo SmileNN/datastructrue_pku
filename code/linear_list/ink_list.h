@@ -24,7 +24,7 @@ class ink_list:public list<T>{
 		
 		node<T>* get_point(int p){
 			node<T> * res = head ;
-			for(int i = 0 ; i < p ; i ++){
+			for(int i = 0 ; i < p && res != NULL ; i ++){
 				res = res -> next ;
 			}
 			return res ;
@@ -72,6 +72,9 @@ class ink_list:public list<T>{
 			node<T> * ind = get_point(p) ;
 			node<T> *  temp = new node<T>(val, ind -> next) ;
 			ind -> next = temp ;
+			if(ind == tail){
+				tail = temp ;
+			}
 			len ++ ;
 			return true ;
 		}
@@ -120,10 +123,10 @@ class ink_list:public list<T>{
 		}
 		
 		void print(){
-			std::cout << "len = " << len << " : ";
+			std::cout << "len = " << len << " , head = " << head -> data << " , tail = " << tail -> data << std::endl;
 			for(node<T> * i = head ; i != tail -> next ; i = i -> next){
 				std::cout << i -> data << " ";
 			}
-			std::cout << std::endl;
+			std::cout << std::endl << std::endl;
 		}
 };

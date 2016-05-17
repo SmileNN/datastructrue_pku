@@ -17,7 +17,7 @@ void ink_list_test(){
 	for(int i = 0 ; i < 10 ; i ++){
 		alist.append(i) ;
 	}
-	for(int i = 0 ; i < 4 ; i ++){
+	for(int i = 10 ; i < 14 ; i ++){
 		alist.insert(i , 11 * (i + 1)) ;
 		alist.print();
 	}
