@@ -2,14 +2,37 @@
 
 #include "./linear_list/arr_list.h"
 #include "./linear_list/ink_list.h"
+#include "./stack/stack.h"
+#include "./stack/ink_stack.h"
 
 void ink_list_test();
 void arr_list_test();
+void arr_stack_test();
 
 int main(){
 	//arr_list_test();
-	ink_list_test();
+	//k_list_test();
+	arr_stack_test();
 	return 0 ;
+}
+void arr_stack_test(){
+	arr_stack<int> astack ;
+	for(int i = 0 ; i < 17 ; i ++){
+		astack.push(i) ;
+	}
+	astack.print();
+	
+	int item ;
+	astack.get_top(item) ;
+	std::cout << "top : " << item << std::endl;
+	
+	for(int i = 0 ; i < 10 ; i ++){
+		std::cout << "pop : " << astack.pop() << std::endl;
+		astack.print();
+	}
+
+	astack.clear();
+	astack.print();
 }
 
 void ink_list_test(){
