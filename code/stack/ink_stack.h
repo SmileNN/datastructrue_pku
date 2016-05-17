@@ -1,78 +1,60 @@
 #include <iostream>
+
 #include ".\stack.h"
+#include "..\node.h"
 
 template <class T>
-class arr_stack: public stack<T>{
+class ink_stack:public stack<T>{
 	private:
 		int size ;
-		int top ;
-		T * st ;
-		void expand(){
-			size += size ;
-			T * tmp = new T[size] ;
-			for(int i = 0 ; i < top ; i ++){
-				tmp[i] = st[i] ;
-			}
-			delete st ;
-			st = tmp ;
-		}
-		void narrow(){
-			size /= 2 ;
-			T * tmp = new T[size] ;
-			for(int i = 0 ; i < top ; i ++){
-				tmp[i] = st[i] ;
-			}
-			delete st ;
-			st = tmp ;
-		}
+		node<T> * top ;
 	public:
-		arr_stack(){
-			size = 1 ;
-			st = new T[size] ;
-			top = 0 ;
+		ink_stack(){
+			size = 0 ;
+			top = NULL ;
 		}
-		~arr_stack(){
-			delete st ;
+		~ink_stack(){
+			clear() ;	
 		}
-		
 		void clear(){
-			delete st ;
-			size = 1 ;
-			st = new T[size] ;
-			top = 0 ;
+			while( top != NULL){
+				node<T> * p = top ;
+				top = p -> next ;
+				delete p ;
+			}
+			size = 0 ;
 		}
 		bool push(const T val){
-			if(top >= size){
-				expand() ;
-			}
-			st[top ++] = val ;
+			node<T> * temp = new node<T>(val, top) ;
+			top = temp ;
+			size ++ ;
+			return true ;
 		}
 		T pop(){
-			T item = st[-- top] ;
-			if(top * 4 < size){
-				narrow() ;
-			}
-			return item ;
+			node<T> * temp = top ;
+			top = top -> next ;
+			T res = temp -> data ;
+			delete temp ;
+			size -- ;
+			return res ;
 		}
-
 		bool get_top(T & item){
-			if(top > 0){
-				item = st[top - 1] ;
-				return true ;
+			if( top == NULL ){
+				return false ;
 			}
-			return false ;
+			item = top -> data ;
+			return true ;
 		}
-
 		bool is_empty(){
-			return top == 0 ? true : false ;
+			return top == NULL ? true : false ;
 		}
-
 		void print(){
-			std::cout << "size = " << size << " top = " << top << std::endl;
-			for(int i = 0 ; i < top ; i ++){
-				std::cout << st[i] << " ";
+			std::cout << "size = " << size << std::endl;
+			node<T> * temp = top ;
+			while(temp != NULL){
+				std::cout << temp -> data << " " ;
+				temp = temp -> next ;
 			}
-			std::cout << std::endl << std::endl;
+			std::cout << std::endl << std::endl ;
 		}
 };
-
