@@ -7,22 +7,43 @@
 #include "./stack/arr_stack.h"
 #include "./stack/ink_stack.h"
 
+#include "./queue/queue.h"
+#include "./queue/ink_queue.h"
+
 void ink_list_test();
 void arr_list_test();
 void arr_stack_test();
 void ink_stack_test();
+void ink_queue_test();
 
 int main(){
 	//arr_list_test();
 	//k_list_test();
 	//arr_stack_test();
-	ink_stack_test();
+	//ink_stack_test();
+	ink_queue_test();	
 	return 0 ;
+}
+
+void ink_queue_test(){
+	ink_queue<int> aqueue ;
+	for(int i = 0 ; i < 14 ; i ++){
+		aqueue.push(i) ;
+	}
+	aqueue.print();
+
+	for(int i = 0 ; i < 3 ; i ++){
+		aqueue.pop() ;
+		aqueue.print();
+	}
+	
+	std::cout << aqueue.top() << std::endl;
+
 }
 
 void ink_stack_test(){
 	ink_stack<int> astack ;
-	for(int i = 0 ; i < 17 ; i ++){
+	for(int i = 0 ; i < 1000 ; i ++){
 		astack.push(i) ;
 	}
 	astack.print();
@@ -31,10 +52,10 @@ void ink_stack_test(){
 	astack.get_top(item) ;
 	std::cout << "top : " << item << std::endl;
 	
-	for(int i = 0 ; i < 10 ; i ++){
+	for(int i = 0 ; i < 100 ; i ++){
 		std::cout << "pop : " << astack.pop() << std::endl;
-		astack.print();
 	}
+	astack.print();
 
 	astack.clear();
 	astack.print();
